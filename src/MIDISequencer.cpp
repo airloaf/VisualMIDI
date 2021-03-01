@@ -49,7 +49,7 @@ void MIDISequencer::addNotePressureEvent(uint8_t note, uint8_t pressure, double 
 {
     MIDI_EVENT notePressure;
 
-    notePressure.type = MIDI_EVENT_TYPE::NOTE_AFTERTOUCH;
+    notePressure.type = MIDI_EVENT_TYPE::NOTE_PRESSURE;
     notePressure.note = note;
     notePressure.note_pressure = pressure;
 
@@ -75,6 +75,15 @@ void MIDISequencer::addProgramChangeEvent(uint8_t program, double startTime)
     programChange.program = program;
 
     mEvents.push_back({programChange, startTime});
+}
+
+void MIDISequencer::addChannelPressureEvent(uint8_t velocity, double startTime)
+{
+    MIDI_EVENT channelPressure;
+    channelPressure.type == MIDI_EVENT_TYPE::CHANNEL_PRESSURE;
+    channelPressure.velocity = velocity;
+
+    mEvents.push_back({channelPressure, startTime});
 }
 
 void MIDISequencer::addPitchBendEvent(uint8_t lsb, uint8_t msb, double startTime)

@@ -31,11 +31,38 @@ void addNotesToSequencer(std::vector<MIDISequencer> &seqs, smf::MidiFile &file)
 
                 seqs[channel].addNotePlayEvent(note, velocity, startTime, duration);
             }
+            else if(midiEvent.isAftertouch())
+            {
+                int note = file[track][event].getP1();
+                int pressure = file[track][event].getP2();
+
+                seqs[channel].addNotePressureEvent(note, pressure, startTime);
+            }
+            else if(midiEvent.isController())
+            {
+                int controllerNum = file[track][event].getP1();
+                int value = file[track][event].getP2();
+
+                seqs[channel].addControllerEvent(controllerNum, value, startTime);
+            }
             else if (midiEvent.isPatchChange())
             {
                 int patch = file[track][event].getP1();
 
                 seqs[channel].addProgramChangeEvent(patch, startTime);
+            }
+            else if(midiEvent.isAftertouch())
+            {
+                int velocity = file[track][event].getP1();
+
+                seqs[channel].addChannelPressureEvent(velocity, startTime);
+            }
+            else if(midiEvent.isPitchbend())
+            {
+                int lsb = file[track][event].getP1();
+                int msb = file[track][event].getP2();
+                
+                seqs[channel].addPitchBendEvent(lsb, msb, startTime);
             }
         }
     }
@@ -46,7 +73,7 @@ int main(int argc, char *argv[])
     smf::MidiFile midifile;
     if (argc <= 1)
     {
-        midifile.read("../../midis/HisWorld.mid");
+        midifile.read("../../midis/tmnt400.mid");
     }
     else
     {

@@ -17,6 +17,7 @@ public:
     void addNotePressureEvent(uint8_t note, uint8_t pressure, double startTime);
     void addControllerEvent(uint8_t controller, uint8_t value, double startTime);
     void addProgramChangeEvent(uint8_t program, double startTime);
+    void addChannelPressureEvent(uint8_t velocity, double startTime);
     void addPitchBendEvent(uint8_t lsb, uint8_t msb, double startTime);
 
     void sortEventsByTime();

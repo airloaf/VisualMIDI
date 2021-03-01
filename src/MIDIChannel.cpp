@@ -40,6 +40,8 @@ double MIDIChannel::sample(double time)
     return sample;
 }
 
+#include <iostream>
+
 void MIDIChannel::handleEvent(const MIDI_EVENT &event)
 {
     if (event.type == MIDI_EVENT_TYPE::NOTE_ON)
@@ -60,5 +62,21 @@ void MIDIChannel::handleEvent(const MIDI_EVENT &event)
         for(auto it = mNotes.begin(); it != mNotes.end(); it++){
             it->env.setADSR(ENVELOPES[event.program]);
         }
+    }
+    else if(event.type == MIDI_EVENT_TYPE::PITCH_BEND)
+    {
+        std::cout << "Pitch Bend" << std::endl;
+    }
+    else if(event.type == MIDI_EVENT_TYPE::NOTE_PRESSURE)
+    {
+        std::cout << "Note Aftertouch" << std::endl;
+    }
+    else if(event.type == MIDI_EVENT_TYPE::CONTROLLER)
+    {
+        std::cout << "Controller" << std::endl;
+    }
+    else if(event.type == MIDI_EVENT_TYPE::CHANNEL_PRESSURE)
+    {
+        std::cout << "Channel Aftertouch" << std::endl;
     }
 }
